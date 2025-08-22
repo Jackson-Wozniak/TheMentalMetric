@@ -92,7 +92,8 @@ const GameGrid: React.FC<{
         const buttonIndex = array.map(b => b.index).indexOf(index);
         if(buttonIndex == -1) return;
 
-        if(array[buttonIndex].state == ButtonState.GUESSED_CORRECT) return;
+        if(array[buttonIndex].state == ButtonState.GUESSED_CORRECT 
+            || array[buttonIndex].state == ButtonState.GUESSES_INCORRECT) return;
 
         if(array[buttonIndex].state == ButtonState.FLASHED){
             array[buttonIndex].state = ButtonState.GUESSED_CORRECT;
@@ -114,20 +115,6 @@ const GameGrid: React.FC<{
             gameDispatch({ type: "IncorrectGuess", payload: index })
         }
         setButtons(array);
-    }
-
-    function toTimestamps(times: number[]){
-        let intitialGuess = times[0];
-        const durations = [];
-        for(let i = 1; i < times.length; i++){
-            durations.push(times[i] - intitialGuess);
-            intitialGuess = times[i];
-        }
-        return durations;
-    }
-
-    function average(times: number[]){
-        return times.reduce((acc, curr) => acc + curr, 0) / times.length;
     }
 
     if(levelCompleted){

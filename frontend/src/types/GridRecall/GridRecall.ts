@@ -1,4 +1,4 @@
-import type { GridRecallState } from "../../components/GridRecall/GridDispatch";
+import type { GridLevelStats, GridRecallState } from "../../components/GridRecall/GridDispatch";
 import type { ButtonState } from "./GridEnums";
 
 export interface GridButtonState {
@@ -29,10 +29,38 @@ export interface GridRecallPerformance {
     buttonAccuracy: GridButtonAccuracy[]
 }
 
-export function fromGridRecallDispatchState(state: GridRecallState){
+function toTimestamps(times: number[]){
+        let intitialGuess = times[0];
+        const durations = [];
+        for(let i = 1; i < times.length; i++){
+            durations.push(times[i] - intitialGuess);
+            intitialGuess = times[i];
+        }
+        return durations;
+    }
+
+    function average(times: number[]){
+        return times.reduce((acc, curr) => acc + curr, 0) / times.length;
+    }
+
+function toGridLevelPerformance(stats: GridLevelStats){
+    console.log(toTimestamps(stats.timeOfGuesses));
+    const levelPerformance: GridLevelPerformance = {
+        level: stats.level,
+        averageTimeBetweenGuesses: average(toTimestamps(stats.timeOfGuesses)),
+        totalTimeTaken: stats.timeOfGuesses[stats.timeOfGuesses.length - 1] - stats.startTime
+    }
+    return levelPerformance;
+}
+
+function toGridButtonAccuracy(state: GridRecallState){
+
+}
+
+export function toGridRecallPerformance(state: GridRecallState){
     return {
-        completedLevels: 0,
-        levelPerformance: [],
+        completedLevels: state.level,
+        levelPerformance: Array.from(state.levelStats.values()).map(toGridLevelPerformance),
         buttonAccuracy: []
     }
 }

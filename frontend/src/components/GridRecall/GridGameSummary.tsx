@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { fromGridRecallDispatchState, type GridRecallPerformance } from "../../types/GridRecall/GridRecall";
-import type { GridRecallState } from "./GridDispatch";
+import { toGridRecallPerformance, type GridRecallPerformance } from "../../types/GridRecall/GridRecall";
+import type { GridRecallState, GridLevelStats } from "./GridDispatch";
 
 
 const GridGameSummary: React.FC<{
     endingState: GridRecallState
 }> = ({endingState}) => {
-    const [gamePerformance, setGamePerformance] = useState<GridRecallPerformance>(fromGridRecallDispatchState(endingState));
+    const [gamePerformance, setGamePerformance] = useState<GridRecallPerformance>(toGridRecallPerformance(endingState));
 
     return (
         <div>
