@@ -1,12 +1,11 @@
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import { useEffect, useReducer, useState } from 'react';
 import { findGridLevelProperties, type GridLevelProperties } from '../../utils/GridRecall/GridRecallProperties';
-import { GridRecallReducer, inititalGridRecallState } from './GridDispatch';
+import { GridRecallReducer, inititalGridRecallState, type GridRecallState } from './GridDispatch';
 import React from 'react';
 import { ButtonState } from '../../types/GridRecall/GridEnums';
 import type { GridButtonState } from '../../types/GridRecall/GridRecall';
-import GridLevelStart from './GridLevelStart';
-import { CenteredFullWindow } from '../../styles/Shared';
+import GridLevelStart from './game/GridLevelStart';
 
 /*
 Stats to gather:
@@ -34,7 +33,9 @@ function getBackgroundColor(state: ButtonState, isTimerRunning: boolean){
 /*
 IMPORTANT NOTE: this is just testing, the actual approach has to be cleaner
 */
-const GameGrid: React.FC = () => {
+const GameGrid: React.FC<{
+    endGame: (state: GridRecallState) => void
+}> = ({endGame}) => {
     const theme = useTheme();
 
     const [gameState, gameDispatch] = useReducer(GridRecallReducer, inititalGridRecallState);
@@ -106,6 +107,11 @@ const GameGrid: React.FC = () => {
             }
         }else{
             array[buttonIndex].state = ButtonState.GUESSES_INCORRECT;
+            if(gameState.missesLeft - 1 == 0){
+                endGame(gameState);
+                return;
+            }
+            gameDispatch({ type: "IncorrectGuess", payload: index })
         }
         setButtons(array);
     }

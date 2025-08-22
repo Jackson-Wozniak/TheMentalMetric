@@ -68,6 +68,7 @@ export const GridRecallReducer = (state: GridRecallState, action: GridRecallActi
         }
         case "IncorrectGuess": return {
             ...state,
+            missesLeft: state.missesLeft - 1,
             levelStats: updateLevelStats(state.levelStats, state.level, oldStats => ({
                 ...oldStats,
                 incorrectGuesses: [...oldStats.incorrectGuesses, action.payload]

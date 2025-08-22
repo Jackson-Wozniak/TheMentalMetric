@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { GRID_RECALL_ALLOWED_MISSES } from "../../utils/GridRecall/GridRecallProperties";
-import { CenteredFullWindow } from "../../styles/Shared";
+import { GRID_RECALL_ALLOWED_MISSES } from "../../../utils/GridRecall/GridRecallProperties";
+import { CenteredFullWindow } from "../../../styles/Shared";
 import { Box } from "@mui/material";
 
 
