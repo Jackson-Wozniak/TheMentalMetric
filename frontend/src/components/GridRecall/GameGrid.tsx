@@ -1,8 +1,12 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useReducer, useState } from 'react';
-import { findGridLevelProperties, type GridLevelProperties } from '../../utils/GridRecallProperties';
-import { GridRecallReducer, inititalGridRecallState, type GridLevelStats } from './GridDispatch';
+import { findGridLevelProperties, type GridLevelProperties } from '../../utils/GridRecall/GridRecallProperties';
+import { GridRecallReducer, inititalGridRecallState } from './GridDispatch';
 import React from 'react';
+import { ButtonState } from '../../types/GridRecall/GridEnums';
+import type { GridButtonState } from '../../types/GridRecall/GridRecall';
+import GridLevelStart from './GridLevelStart';
+import { CenteredFullWindow } from '../../styles/Shared';
 
 /*
 Stats to gather:
@@ -15,18 +19,6 @@ Stats to gather:
         * count the error rate by the exact location of the button
         * count each time a button was chosen, and when each button was guessed
 */
-
-enum ButtonState {
-    NONE = 0,
-    FLASHED = 1,
-    GUESSED_CORRECT = 2,
-    GUESSES_INCORRECT = 3,
-}
-
-interface GridButtonState {
-    index: number,
-    state: ButtonState
-}
 
 const getRandomNumber = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min) + min);
@@ -132,37 +124,23 @@ const GameGrid: React.FC = () => {
 
     if(levelCompleted){
         return (
-            <>
-                <Typography variant="h3">Next Level: {gameState.level}</Typography>
-                <br/>
-                {Array.from(gameState.levelStats.values()).map((stats: GridLevelStats) => {
-                    return (
-                        <React.Fragment key={stats.level}>
-                            <Typography variant="h5">Level {stats.level} Stats</Typography>
-                            <Typography variant="body1">Time Until First Guess: {stats.timeOfGuesses[0] - stats.startTime}ms</Typography>
-                            <Typography variant="body1">Time Between Guesses: {toTimestamps(stats.timeOfGuesses).join("ms, ")}ms</Typography>
-                            <Typography variant="body1">Avg. Guess Time: {average(toTimestamps(stats.timeOfGuesses))}ms</Typography>
-                            <Typography variant="body1">Total Time: {stats.timeOfGuesses[stats.timeOfGuesses.length - 1] - stats.startTime}ms</Typography>
-                            <br/>
-                        </React.Fragment>
-                    )
-                })}
-                <Button onClick={beginLevelTimer}>Start</Button>
-            </>
+            <GridLevelStart level={gameState.level} startLevel={beginLevelTimer} 
+                missesLeft={gameState.missesLeft}/>
         )
     }
 
     return (
-        <Box display="grid" gridTemplateColumns={`repeat(${findGridLevelProperties(gameState.level).gridWidth}, 1fr)`} gap={2}>
-                {buttons.map((b: GridButtonState) => {
-                    return (
-                        <Button key={b.index} onClick={() => handleGridButtonClick(b.index)}
-                            sx={{height: "35px", width: "35px", border: "1px solid black", background: 
-                            getBackgroundColor(b.state, timerRunning), color: "white"}}>
-                        </Button>
-                    )
-                })}
-            </Box>
+        <Box display="grid" gridTemplateColumns={`repeat(${findGridLevelProperties(gameState.level).gridWidth}, 1fr)`} 
+            gap={1} sx={{width: "100%", height: "100%", alignItems: "center", justifyContent: "center", placeItems: "center"}}>
+            {buttons.map((b: GridButtonState) => {
+                return (
+                    <Button key={b.index} onClick={() => handleGridButtonClick(b.index)}
+                        sx={{height: "65%", aspectRatio: "1 / 1", border: "1px solid black", background: 
+                        getBackgroundColor(b.state, timerRunning), color: "white"}}>
+                    </Button>
+                )
+            })}
+        </Box>
     )
 }
 
