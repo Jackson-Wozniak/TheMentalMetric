@@ -1,5 +1,5 @@
-import { Box, Button, Typography } from '@mui/material';
-import { useReducer, useState } from 'react';
+import { Box, Button, Typography, useTheme } from '@mui/material';
+import { useEffect, useReducer, useState } from 'react';
 import { findGridLevelProperties, type GridLevelProperties } from '../../utils/GridRecall/GridRecallProperties';
 import { GridRecallReducer, inititalGridRecallState } from './GridDispatch';
 import React from 'react';
@@ -35,6 +35,8 @@ function getBackgroundColor(state: ButtonState, isTimerRunning: boolean){
 IMPORTANT NOTE: this is just testing, the actual approach has to be cleaner
 */
 const GameGrid: React.FC = () => {
+    const theme = useTheme();
+
     const [gameState, gameDispatch] = useReducer(GridRecallReducer, inititalGridRecallState);
 
     const [levelCompleted, setLevelCompleted] = useState<boolean>(true);
@@ -130,16 +132,26 @@ const GameGrid: React.FC = () => {
     }
 
     return (
-        <Box display="grid" gridTemplateColumns={`repeat(${findGridLevelProperties(gameState.level).gridWidth}, 1fr)`} 
-            gap={1} sx={{width: "100%", height: "100%", alignItems: "center", justifyContent: "center", placeItems: "center"}}>
+        <Box sx={{height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
+            
+            <Box
+                sx={{
+                    aspectRatio: "1 / 1",
+                    display: "grid",
+                    gridTemplateColumns: `repeat(${findGridLevelProperties(gameState.level).gridWidth}, 1fr)`,
+                    width: Math.min(theme.width, theme.height) * .8, 
+                    height: Math.min(theme.width, theme.height) * .8
+                }}
+            >
             {buttons.map((b: GridButtonState) => {
                 return (
                     <Button key={b.index} onClick={() => handleGridButtonClick(b.index)}
-                        sx={{height: "65%", aspectRatio: "1 / 1", border: "1px solid black", background: 
+                        sx={{height: "100%", aspectRatio: "1 / 1", border: "1px solid black", background: 
                         getBackgroundColor(b.state, timerRunning), color: "white"}}>
                     </Button>
                 )
             })}
+            </Box>
         </Box>
     )
 }

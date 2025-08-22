@@ -1,7 +1,9 @@
 import { createTheme, type Theme } from "@mui/material/styles";
 import "@mui/material/styles";
 
-export const LightTheme = (displayType: 'desktop' | 'mobile' = 'desktop'): Theme => createTheme({
+export const LightTheme = (displayType: 'desktop' | 'mobile' = 'desktop',
+    width: number = 0, height: number = 0
+): Theme => createTheme({
     palette : {
         primary: {
             main: "#0070c0",
@@ -22,10 +24,14 @@ export const LightTheme = (displayType: 'desktop' | 'mobile' = 'desktop'): Theme
             secondary: "#3d3d3d"
         }
     },
-    display: displayType
+    display: displayType,
+    width: width,
+    height: height
 });
 
-export const DarkTheme = (displayType: 'desktop' | 'mobile' = 'desktop'): Theme => createTheme({
+export const DarkTheme = (displayType: 'desktop' | 'mobile' = 'desktop', 
+    width: number = 0, height: number = 0
+): Theme => createTheme({
     palette : {
         primary: {
             main: "#51a1daff",
@@ -46,5 +52,7 @@ export const DarkTheme = (displayType: 'desktop' | 'mobile' = 'desktop'): Theme 
             secondary: "#d0d0d0ff"
         }
     },
-    display: displayType
+    display: displayType,
+    width: width,
+    height: height
 });

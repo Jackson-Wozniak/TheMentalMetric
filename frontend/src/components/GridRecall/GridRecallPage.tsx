@@ -9,9 +9,7 @@ const GridRecallPage: React.FC = () => {
     return (
         <ContentContainer>
             <Box sx={{display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center"}}>
-                <Box width="50%" height="50%">
-                    <GameGrid/>
-                </Box>
+                <GameGrid/>
             </Box>
         </ContentContainer>
     )

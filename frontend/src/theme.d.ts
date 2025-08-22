@@ -10,8 +10,12 @@ declare module '@mui/material/styles' {
     }
     interface Theme {
         display: 'desktop' | 'mobile';
+        width: number;
+        height: number;
     }
     interface ThemeOptions {
-        display?: 'desktop' | 'mobile'; 
+        display?: 'desktop' | 'mobile';
+        width?: number;
+        height?: number;
     }
 }

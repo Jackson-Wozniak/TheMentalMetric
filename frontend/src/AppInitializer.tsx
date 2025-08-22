@@ -9,9 +9,13 @@ import Page from "./components/Shared/Page";
 const AppInitializer: React.FC = () => {
     const [mode, setMode] = useState<'light' | 'dark'>('light');
     const [displayType, setDisplayType] = useState<'desktop' | 'mobile'>();
+    const [width, setWidth] = useState<number>(window.innerWidth);
+    const [height, setHeight] = useState<number>(window.innerHeight);
 
     useEffect(() => {
         const handleResize = () => {
+            setWidth(window.innerWidth);
+            setHeight(window.innerHeight);
             setDisplayType(window.innerWidth < window.innerHeight ? 'mobile' : 'desktop');
         }
         handleResize();
@@ -20,7 +24,7 @@ const AppInitializer: React.FC = () => {
     }, []);
 
 	return (
-		<ThemeProvider theme={mode === 'light' ? LightTheme(displayType) : DarkTheme(displayType)}>
+		<ThemeProvider theme={mode === 'light' ? LightTheme(displayType, width, height) : DarkTheme(displayType, width, height)}>
             <BrowserRouter>
                 <Routes>
                     <Route index element={<Page setMode={setMode} component={<HomePage/>} />} />
