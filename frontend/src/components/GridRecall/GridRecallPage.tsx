@@ -4,18 +4,19 @@ import GameGrid from "./GameGrid";
 import { useState } from "react";
 import type { GridRecallState } from "./GridDispatch";
 import GridGameSummary from "./GridGameSummary";
+import { toGridRecallPerformance, type GridRecallPerformance } from "../../types/GridRecall/GridRecall";
 
 const GridRecallPage: React.FC = () => {
     const [gameEnded, setGameEnded] = useState<boolean>();
-    const [gameState, setGameState] = useState<GridRecallState | undefined>();
+    const [gameResults, setGameResults] = useState<GridRecallPerformance | undefined>();
 
     function handleGameOver(state: GridRecallState){
         setGameEnded(true);
-        setGameState(state);
+        setGameResults(toGridRecallPerformance(state));
     }
     
-    if(gameEnded && gameState != undefined){
-        return <GridGameSummary endingState={gameState}/>
+    if(gameEnded && gameResults != undefined){
+        return <GridGameSummary gameResults={gameResults}/>
     }
 
     return (

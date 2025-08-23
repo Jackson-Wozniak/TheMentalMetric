@@ -6,6 +6,8 @@ import React from 'react';
 import { ButtonState } from '../../types/GridRecall/GridEnums';
 import type { GridButtonState } from '../../types/GridRecall/GridRecall';
 import GridLevelStart from './game/GridLevelStart';
+import GridScoreboard from './game/GridScoreboard';
+import { CenteredFullWindow } from '../../styles/Shared';
 
 /*
 Stats to gather:
@@ -125,15 +127,16 @@ const GameGrid: React.FC<{
     }
 
     return (
-        <Box sx={{height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-            
+        <Box sx={CenteredFullWindow()}>
+            <GridScoreboard level={gameState.level} livesLeft={gameState.missesLeft}/>
             <Box
                 sx={{
                     aspectRatio: "1 / 1",
                     display: "grid",
                     gridTemplateColumns: `repeat(${findGridLevelProperties(gameState.level).gridWidth}, 1fr)`,
-                    width: Math.min(theme.width, theme.height) * .8, 
-                    height: Math.min(theme.width, theme.height) * .8
+                    width: Math.min(theme.width, theme.height) * .75, 
+                    height: Math.min(theme.width, theme.height) * .75,
+                    marginBottom: "15px"
                 }}
             >
             {buttons.map((b: GridButtonState) => {

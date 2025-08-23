@@ -44,7 +44,6 @@ function toTimestamps(times: number[]){
     }
 
 function toGridLevelPerformance(stats: GridLevelStats){
-    console.log(toTimestamps(stats.timeOfGuesses));
     const levelPerformance: GridLevelPerformance = {
         level: stats.level,
         averageTimeBetweenGuesses: average(toTimestamps(stats.timeOfGuesses)),
@@ -54,13 +53,14 @@ function toGridLevelPerformance(stats: GridLevelStats){
 }
 
 function toGridButtonAccuracy(state: GridRecallState){
-
+    const levelStats = state.levelStats;
+    return [];
 }
 
 export function toGridRecallPerformance(state: GridRecallState){
     return {
         completedLevels: state.level,
         levelPerformance: Array.from(state.levelStats.values()).map(toGridLevelPerformance),
-        buttonAccuracy: []
+        buttonAccuracy: toGridButtonAccuracy(state)
     }
 }
