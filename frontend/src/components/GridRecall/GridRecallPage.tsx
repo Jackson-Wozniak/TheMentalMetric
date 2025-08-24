@@ -12,6 +12,7 @@ const GridRecallPage: React.FC = () => {
 
     function handleGameOver(state: GridRecallState){
         setGameEnded(true);
+        console.log(toGridRecallPerformance(state));
         setGameResults(toGridRecallPerformance(state));
     }
     

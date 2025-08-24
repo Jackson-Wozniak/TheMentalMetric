@@ -1,14 +1,10 @@
 import type { GridLevelStats, GridRecallState } from "../../components/GridRecall/GridDispatch";
+import { findGridLevelProperties, MAX_GRID_WIDTH } from "../../utils/GridRecall/GridRecallProperties";
 import type { ButtonState } from "./GridEnums";
 
 export interface GridButtonState {
     index: number,
     state: ButtonState
-}
-
-//Allows for mapping between index on a 3x3, 4x4, 5x5 grid to a universal grid
-function getScaledGridButtonIndex(index: number, gridWidth: number){
-
 }
 
 export interface GridLevelPerformance {
@@ -52,15 +48,41 @@ function toGridLevelPerformance(stats: GridLevelStats){
     return levelPerformance;
 }
 
-function toGridButtonAccuracy(state: GridRecallState){
-    const levelStats = state.levelStats;
-    return [];
+function toGridButtonAccuracy(levelStats: Map<number, GridLevelStats>){
+    const buttonMap: Map<number, number[]> = new Map();
+    for(let i = 0; i < MAX_GRID_WIDTH * MAX_GRID_WIDTH; i++){
+        buttonMap.set(i, [0, 0]);
+    }
+
+    levelStats.forEach((value: GridLevelStats, _: number) => {
+        value.correctGuesses.forEach((index: number) => {
+            const entry: number[] | undefined = buttonMap.get(index);
+            if(entry == null) return;
+            entry[0] += 1;
+        });
+        value.incorrectGuesses.forEach((index: number) => {
+            const entry: number[] | undefined = buttonMap.get(index);
+            if(entry == null) return;
+            entry[1] += 1;
+        });
+    });
+    return Array.from(buttonMap).map(([key, value]) => {
+        const accuracy: GridButtonAccuracy = {
+            index: key,
+            correctGuesses: value[0],
+            errorRate: value[1] / (value[0] + value[1])
+        }
+        return accuracy;
+    })
 }
 
-export function toGridRecallPerformance(state: GridRecallState){
+export function toGridRecallPerformance(state: GridRecallState): GridRecallPerformance{
+    const levelStats = new Map([...state.levelStats].filter(([_, stats]) =>
+        stats.correctGuesses.length == findGridLevelProperties(stats.level).buttonFlashCount
+    ));
     return {
-        completedLevels: state.level,
-        levelPerformance: Array.from(state.levelStats.values()).map(toGridLevelPerformance),
-        buttonAccuracy: toGridButtonAccuracy(state)
+        completedLevels: levelStats.size,
+        levelPerformance: Array.from(levelStats.values()).map(toGridLevelPerformance),
+        buttonAccuracy: toGridButtonAccuracy(levelStats)
     }
 }

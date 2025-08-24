@@ -24,3 +24,4 @@ export function findGridLevelProperties(level: number){
 }
 
 export const GRID_RECALL_ALLOWED_MISSES = 10;
+export const MAX_GRID_WIDTH = 5;

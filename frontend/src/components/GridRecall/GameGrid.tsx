@@ -1,6 +1,6 @@
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import { useEffect, useReducer, useState } from 'react';
-import { findGridLevelProperties, type GridLevelProperties } from '../../utils/GridRecall/GridRecallProperties';
+import { findGridLevelProperties, MAX_GRID_WIDTH, type GridLevelProperties } from '../../utils/GridRecall/GridRecallProperties';
 import { GridRecallReducer, inititalGridRecallState, type GridRecallState } from './GridDispatch';
 import React from 'react';
 import { ButtonState } from '../../types/GridRecall/GridEnums';
@@ -71,18 +71,23 @@ const GameGrid: React.FC<{
         const flashesLeft = properties.buttonFlashCount;
         let flashedButtons: number[] = [];
         for(let i = 0; i < flashesLeft; i++){
-            let rand = getRandomNumber(0, properties.gridWidth * properties.gridWidth);
-            if(flashedButtons.includes(rand)){
+            let row = getRandomNumber(0, properties.gridWidth);
+            let col = getRandomNumber(0, properties.gridWidth);
+            const index = (row * MAX_GRID_WIDTH) + col;
+            if(flashedButtons.includes(index)){
                 i--;
                 continue;
             }
-            flashedButtons.push(rand);
+            flashedButtons.push(index);
         }
 
         let created: GridButtonState[] = [];
-        for(let i = 0; i < properties.gridWidth * properties.gridWidth; i++){
-            created.push({index: i, state: flashedButtons.includes(i) 
+        for(let i = 0; i < properties.gridWidth; i++){
+            for(let j = 0; j < properties.gridWidth; j++){
+                const index = (i * MAX_GRID_WIDTH) + j;
+                created.push({index: index, state: flashedButtons.includes(index) 
                 ? ButtonState.FLASHED : ButtonState.NONE});
+            }
         }
         return created;
     }
