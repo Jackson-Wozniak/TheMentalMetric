@@ -18,7 +18,7 @@ export interface GridRecallState {
 export const inititalGridRecallState = {
     level: 1,
     score: 0,
-    missesLeft: GRID_RECALL_ALLOWED_MISSES,
+    missesLeft: 1,
     levelStats: new Map<number, GridLevelStats>()
 }
 

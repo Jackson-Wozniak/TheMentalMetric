@@ -16,7 +16,7 @@ export interface GridLevelPerformance {
 export interface GridButtonAccuracy {
     index: number,
     correctGuesses: number,
-    accuracyRate: number
+    incorrectGuesses: number
 }
 
 export interface GridRecallPerformance {
@@ -70,7 +70,7 @@ function toGridButtonAccuracy(levelStats: Map<number, GridLevelStats>){
         const accuracy: GridButtonAccuracy = {
             index: key,
             correctGuesses: value[0],
-            accuracyRate: value[0] + value[1] > 0 ? value[0] / (value[0] + value[1]) : 0
+            incorrectGuesses: value[1]
         }
         return accuracy;
     })
