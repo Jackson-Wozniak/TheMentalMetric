@@ -3,6 +3,13 @@ import type { GridRecallPerformanceReport } from "../types/GridRecall/GridRecall
 
 
 export async function fetchEvalulateGridPerformance(results: GridRecallPerformance){
-    const response: GridRecallPerformanceReport = { };
-    return response;
+    const response = await fetch("http://localhost:8080/api/v1/GridRecall/evaluate", {
+        method: "POST",
+        body: JSON.stringify(results)
+    })
+
+    const json = await response.json();
+
+    const data: GridRecallPerformanceReport = { };
+    return data;
 }
