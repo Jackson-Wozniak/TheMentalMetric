@@ -26,8 +26,10 @@ const selectStyling = (theme: Theme) => { return {
 }}
 
 const headerItems: HeaderEntry[] = [
-    {link: "/", label: "Home Page"},
-    {link: "/GridRecall", label: "Grid Recall"}
+    {link: "/GridRecall", label: "Grid Recall"},
+    {link: "/PeripheralFocus", label: "Peripheral Focus"},
+    {link: "/SelectiveAttention", label: "Selective Attention"},
+    {link: "/WordLink", label: "Word Link"}
 ];
 
 const GithubButton: React.FC = () => {
