@@ -2,7 +2,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { GRID_RECALL_ALLOWED_MISSES } from "../../../utils/GridRecall/GridRecallProperties";
 import { CenteredFullWindow } from "../../../styles/Shared";
-import { Box } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
+import Favorite from "@mui/icons-material/Favorite";
 
 
 const GridLevelStart: React.FC<{
@@ -10,11 +11,22 @@ const GridLevelStart: React.FC<{
     startLevel: () => void,
     missesLeft: number
 }> = ({level, startLevel, missesLeft}) => {
+    const theme = useTheme();
+
     return (
         <Box sx={CenteredFullWindow()}>
-            <Typography variant="h3" color="textPrimary">Next Level: {level}</Typography>
+            <Typography variant="h3" color="textPrimary">Level {level}</Typography>
             <br/>
-            <Typography variant="body1" color="textPrimary">Lives Left: {missesLeft} / {GRID_RECALL_ALLOWED_MISSES}</Typography>
+            <Stack width="100%" display="flex" justifyContent="center" alignItems="center" direction="row">
+                {Array.from({ length: GRID_RECALL_ALLOWED_MISSES }).map((_: any, index: number) => {
+                    return <Favorite
+                        key={index}
+                        style={{
+                            color: index < missesLeft ? 'red' : theme.palette.text.secondary
+                        }}
+                    />
+                })}
+            </Stack>
             <br/>
             <Button onClick={startLevel} variant="contained">Start</Button>
         </Box>
