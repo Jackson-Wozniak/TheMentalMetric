@@ -8,6 +8,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import type { HeaderEntry } from "../../types/Header";
 import type React from "react";
 import HomeImage from './../../assets/logo_full.png';
+import { Games, type Game } from "../../types/GameInfo";
 
 const selectStyling = (theme: Theme) => { return {
     margin: "0px 15px 0px 15px",
@@ -24,13 +25,6 @@ const selectStyling = (theme: Theme) => { return {
         border: 'none',
     },
 }}
-
-const headerItems: HeaderEntry[] = [
-    {link: "/GridRecall", label: "Grid Recall"},
-    {link: "/PeripheralFocus", label: "Peripheral Focus"},
-    {link: "/SelectiveAttention", label: "Selective Attention"},
-    {link: "/WordLink", label: "Word Link"}
-];
 
 const GithubButton: React.FC = () => {
     const theme = useTheme();
@@ -53,10 +47,10 @@ const GithubButton: React.FC = () => {
     )
 }
 
-const HeaderLink: React.FC<{item: HeaderEntry}> = ({item}) => {
+const HeaderLink: React.FC<{item: Game}> = ({item}) => {
     return (
         <Button component={Link} to={item.link} sx={{textDecoration: "none", padding: "0px 20px", color: "text.primary"}}>
-            {item.label}
+            {item.name}
         </Button>
     )
 }
@@ -81,9 +75,9 @@ const Header: React.FC<{
                 </Link>
 
                 <Select value="" IconComponent={FormatListBulletedIcon} sx={selectStyling}>
-                    {headerItems.map((item: HeaderEntry, index: number) => {
+                    {Games.map((game: Game, index: number) => {
                         return (
-                            <MenuItem key={index}><HeaderLink item={item}/></MenuItem>
+                            <MenuItem key={index}><HeaderLink item={game}/></MenuItem>
                         )
                     })}
                 </Select>
@@ -108,9 +102,9 @@ const Header: React.FC<{
                     <img src={HomeImage} height="100%" style={{objectFit: "contain"}}/>
                 </Link>
 
-                {headerItems.map((item: HeaderEntry, index: number) => {
+                {Games.map((game: Game, index: number) => {
                     return (
-                        <HeaderLink key={index} item={item}/>
+                        <HeaderLink key={index} item={game}/>
                     )
                 })}
             </Stack>
