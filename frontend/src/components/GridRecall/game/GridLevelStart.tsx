@@ -28,7 +28,7 @@ const GridLevelStart: React.FC<{
                 })}
             </Stack>
             <br/>
-            <Button onClick={startLevel} variant="contained">Start</Button>
+            <Button onClick={startLevel} variant="contained" color="primary">Start</Button>
         </Box>
     )
 }

@@ -7,11 +7,11 @@ export const LightTheme = (displayType: 'desktop' | 'mobile' = 'desktop',
     palette : {
         primary: {
             main: "#0070c0",
-            contrastText: "#1f1414"
+            contrastText: "#ffffffff"
         },
         secondary: {
             main: "#e2ee15",
-            contrastText: "#000000"
+            contrastText: "#272727ff"
         },
         mode: 'light',
         background : {
