@@ -7,6 +7,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import type { HeaderEntry } from "../../types/Header";
 import type React from "react";
+import HomeImage from './../../assets/logo_full.png';
 
 const selectStyling = (theme: Theme) => { return {
     margin: "0px 15px 0px 15px",
@@ -52,7 +53,7 @@ const GithubButton: React.FC = () => {
 
 const HeaderLink: React.FC<{item: HeaderEntry}> = ({item}) => {
     return (
-        <Button component={Link} to={item.link} sx={{textDecoration: "none", color: "text.primary"}}>
+        <Button component={Link} to={item.link} sx={{textDecoration: "none", padding: "0px 20px", color: "text.primary"}}>
             {item.label}
         </Button>
     )
@@ -70,9 +71,13 @@ const Header: React.FC<{
 
     if(theme.display === 'mobile'){
         return (
-            <Box width="100%" height="10%" sx={{backgroundColor: theme.palette.background.secondary}}
+            <Box width="100%" height="7%" sx={{backgroundColor: theme.palette.background.secondary}}
                 display="flex" justifyContent="space-between" alignItems="center"
             >
+                <Link to={"/"} style={{height: "100%"}}>
+                    <img src={HomeImage} height="100%" style={{width: "auto"}}/>
+                </Link>
+
                 <Select value="" IconComponent={FormatListBulletedIcon} sx={selectStyling}>
                     {headerItems.map((item: HeaderEntry, index: number) => {
                         return (
@@ -96,7 +101,11 @@ const Header: React.FC<{
         <Box width="100%" height="10%" sx={{backgroundColor: theme.palette.background.secondary}}
             display="flex" justifyContent="space-between" alignItems="center"
         >
-            <Stack direction="row" display="flex" justifyContent="space-evenly" margin={1} gap={1}>
+            <Stack height="100%" direction="row" display="flex" justifyContent="space-evenly" gap={0}>
+                <Link to={"/"} style={{height: "100%"}}>
+                    <img src={HomeImage} height="100%" style={{objectFit: "contain"}}/>
+                </Link>
+
                 {headerItems.map((item: HeaderEntry, index: number) => {
                     return (
                         <HeaderLink key={index} item={item}/>
