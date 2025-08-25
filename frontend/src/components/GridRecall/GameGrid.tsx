@@ -62,7 +62,7 @@ const GameGrid: React.FC<{
         const timer = setTimeout(() => {
             setTimerRunning(false);
             gameDispatch({ type: "StartLevel" })
-        }, properties.buttonFlashTime);
+        }, properties.buttonFlashMillis);
 
         return () => clearTimeout(timer);
     }
