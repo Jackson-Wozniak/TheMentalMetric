@@ -10,7 +10,7 @@ const ContentContainer: React.FC<{
     return (
         <Box width="100%" height="90%" marginBottom="20px" boxSizing="content-box" 
             sx={{backgroundColor: theme.palette.background.primary}} overflow="auto">
-            <Box sx={{ paddingBottom: "20px" }}>
+            <Box height="100%" sx={{ paddingBottom: "20px" }}>
                 {children}
             </Box>
         </Box>
