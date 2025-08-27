@@ -7,7 +7,7 @@ const Page: React.FC<{
 }> = ({component, setMode}) => {
 
     return (
-        <Box width="100%" height="100%">
+        <Box width="100%" height="100%" overflow="hidden">
             <Header setMode={setMode}/>
             {component}
         </Box>

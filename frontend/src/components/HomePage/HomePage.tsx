@@ -7,11 +7,17 @@ const HomePage: React.FC = () => {
     return (
         <ContentContainer>
             <Box width="100%" display="flex" justifyContent="center">
+                <Box display="flex" flexDirection="column" width="5%" marginTop="35px">
+
+                </Box>
                 <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center", 
-                    gap: "40px", width: "90%", marginTop: "35px"}}>
+                    gap: "40px", width: "65%", marginTop: "35px"}}>
                     {Games.map((game: Game, index: number) => {
                         return <GameCard key={index} game={game} timesPlayed={0}/>
                     })}
+                </Box>
+                <Box display="flex" flexDirection="column" width="30%" marginTop="35px">
+
                 </Box>
             </Box>
         </ContentContainer>
