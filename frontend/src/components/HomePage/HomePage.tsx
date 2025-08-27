@@ -56,7 +56,7 @@ const HomePage: React.FC = () => {
 
     return (
         <ContentContainer>
-            <Box width="100%" maxHeight="90vh" display="flex" justifyContent="center">
+            <Box width="100%" height="100%" display="flex" justifyContent="center">
                 <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center", 
                     gap: "40px", width: "60%", marginTop: "35px"}}>
                     {Games.map((game: Game, index: number) => {
