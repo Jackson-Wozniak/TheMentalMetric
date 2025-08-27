@@ -37,15 +37,15 @@ const SessionRecordRow: React.FC<{
     record: GameSessionRecord
 }> = ({record}) => {
     return (
-        <Box width="95%" display="flex" mt="2px" textAlign="center">
-            <Box width="33.3%">
-                <Typography color="textPrimary">{record.game}</Typography>
+        <Box width="95%" display="flex" mt="5px" textAlign="center">
+            <Box width="45%">
+                <Typography color="textSecondary">{record.game}</Typography>
             </Box>
-            <Box width="33.3%">
-                <Typography color="textPrimary">{record.score}</Typography>
+            <Box width="15%">
+                <Typography color="textSecondary">{record.score}</Typography>
             </Box>
-            <Box width="33.3%">
-                <Typography color="textPrimary">{record.timePlayed.toLocaleDateString('en-US')}</Typography>
+            <Box width="40%">
+                <Typography color="textSecondary">{record.timePlayed.toLocaleDateString('en-US')}</Typography>
             </Box>
         </Box>
     )
@@ -57,31 +57,28 @@ const HomePage: React.FC = () => {
     return (
         <ContentContainer>
             <Box width="100%" maxHeight="90vh" display="flex" justifyContent="center">
-                <Box display="flex" flexDirection="column" width="5%" marginTop="35px">
-
-                </Box>
                 <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center", 
                     gap: "40px", width: "60%", marginTop: "35px"}}>
                     {Games.map((game: Game, index: number) => {
                         return <GameCard key={index} game={game} timesPlayed={0}/>
                     })}
                 </Box>
-                <Box display="flex" flexDirection="column" width="30%" alignItems="center" marginTop="35px"
+                <Box display="flex" flexDirection="column" width="35%" alignItems="center" marginTop="35px"
                     overflow="hidden"
                     sx={{
                         backgroundColor: theme.palette.background.secondary, borderRadius: "10px"
                     }}>
-                    <Typography variant="h2" fontSize="25px" mt="5px">Recent Sessions</Typography>
+                    <Typography variant="h2" fontSize="25px" mt="5px" color="textPrimary">Recent Sessions</Typography>
                     <Divider sx={{width: "80%", height: "3px"}}/>
                     <Stack direction="column" display="flex" width="100%" alignItems="center" mt="5px" overflow="auto">
                         <Box width="95%" display="flex" textAlign="center" mb="5px">
-                            <Box width="33.3%">
+                            <Box width="45%">
                                 <Typography color="textPrimary" fontWeight="bold">Game</Typography>
                             </Box>
-                            <Box width="33.3%">
+                            <Box width="15%">
                                 <Typography color="textPrimary" fontWeight="bold">Score</Typography>
                             </Box>
-                            <Box width="33.3%">
+                            <Box width="40%">
                                 <Typography color="textPrimary" fontWeight="bold">Time Played</Typography>
                             </Box>
                         </Box>
