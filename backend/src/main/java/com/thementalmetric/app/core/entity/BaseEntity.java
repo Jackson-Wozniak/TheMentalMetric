@@ -2,6 +2,7 @@ package com.thementalmetric.app.core.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
@@ -9,6 +10,7 @@ import java.time.Instant;
 @MappedSuperclass
 @Getter
 @Setter
+@NoArgsConstructor
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +22,15 @@ public class BaseEntity {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-    public BaseEntity(Instant createdAt){
-        this.createdAt = createdAt;
-        this.updatedAt = createdAt;
+    @PrePersist
+    protected void onCreate(){
+        Instant timestamp = Instant.now();
+        this.createdAt = timestamp;
+        this.updatedAt = timestamp;
     }
 
     @PreUpdate
     protected void onUpdate(){
-        setUpdatedAt(Instant.now());
+        this.updatedAt = Instant.now();
     }
 }
